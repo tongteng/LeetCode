@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>1631.最小体力消耗路径</h1>
+    你准备参加一场远足活动。给你一个二维 rows x columns 的地图 heights ，其中 heights[row][col] 表示格子 (row, col) 的高度。一开始你在最左上角的格子 (0,
+    0) ，且你希望去最右下角的格子 (rows-1, columns-1) （注意下标从 0 开始编号）。你每次可以往 上，下，左，右 四个方向之一移动，你想要找到耗费 体力 最小的一条路径。
+
+    一条路径耗费的 体力值 是路径上相邻格子之间 高度差绝对值 的 最大值 决定的。
+
+    请你返回从左上角走到右下角的最小 体力消耗值 。
+
+    <h3>
+        输入：heights = [[1,2,2],[3,8,2],[5,3,5]]
+        输出：2
+        解释：路径 [1,3,5,3,5] 连续格子的差值绝对值最大为 2 。
+        这条路径比路径 [1,2,2,2,5] 更优，因为另一条路径差值最大值为 3 。
+    </h3>
+
+    <h3>
+        输入：heights = [[1,2,3],[3,8,4],[5,3,5]]
+        输出：1
+        解释：路径 [1,2,3,4,5] 的相邻格子差值绝对值最大为 1 ，比路径 [1,3,5,3,5] 更优。
+    </h3>
+
+    <h3>
+        输入：heights = [[1,2,1,1,1],[1,2,1,2,1],[1,2,1,2,1],[1,2,1,2,1],[1,1,1,2,1]]
+        输出：0
+        解释：上图所示路径不需要消耗任何体力。
+    </h3>
+
+    <h5>
+        提示：
+        <ul>
+            <li>rows == heights.length</li>
+            <li>columns == heights[i].length</li>
+            <li>1 <= rows, columns <=100</li>
+            <li>1 <= heights[i][j] <=106</li>
+        </ul>
+    </h5>
+
+    <script>
+        let height1 = [[1, 2, 2], [3, 8, 2], [5, 3, 5]];
+        let height2 = [[1, 2, 3], [3, 8, 4], [5, 3, 5]];
+        let height3 = [[1, 2, 1, 1, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 2, 1, 2, 1], [1, 1, 1, 2, 1]];
+
+        var minimumEffortPath = function (heights) {
+            // 定义遍历的四个方向，分别对应上下左右
+            const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+
+            const row = heights.length, // heights的行数
+                col = heights[0].length; // heights的列数
+            let left = 0, // 二分查找左边界
+                right = 999999, // 二分查找右边界
+                ans = 0; // 最大的权重值
+
+            // 当左值小于等于右值时持续继续二分查找
+            while (left <= right) {
+                const middle = Math.floor((left + right) / 2); // 中间值
+                const queue = [[0, 0]]; // 路径坐标
+                const seen = new Array(row * col).fill(0); // heights所有坐标值集合，走过路径为1，没走为0
+                seen[0] = 1; // 先从第左上角第一个格子开始
+
+                // 如果队列中有符合条件的格子，继续走，没有就停止循环收缩二分查找的范围
+                while (queue.length) {
+                    // 当前所在的格子
+                    const [x, y] = queue.shift();
+                    // 遍历四个方向的格子，是否能满足可以走的条件
+                    for (let i = 0; i < 4; i++) {
+                        // 要遍历格子的行数（第一行）
+                        const nx = x + dirs[i][0];
+                        // 要遍历格子的列数（第几列）
+                        const ny = y + dirs[i][1];
+                        // 能走的条件是：上下左右是存在格子，并且这个格子没有走过（走过再走没有意义，因为后面的结果是一样的），并且权重值（两个格子数值差的绝对值）不能超过二分查找的中间值，只有小于等于中间值的才能跳到这个格子上，最后判定能否到达最后一个格子，如果不能则中间值不是最小体力消耗值，需要调整二分查找的左边界，如果能达到最后一个格子，需要调整二分查找的右边界
+                        if (nx >= 0 && nx < row && ny >= 0 && ny < col && !seen[nx * col + ny] && Math.abs(heights[x][y] - heights[nx][ny]) <= middle) {
+                            queue.push([nx, ny]);
+                            seen[nx * col + ny] = 1;
+                        }
+                    }
+                }
+                // 如果能到达最后一个格子，那么调整由边界，并把中间值赋予最小权重值
+                if (seen[row * col - 1]) {
+                    ans = middle;
+                    right = middle - 1;
+                    // 如果不能到达最后一个格子，那么调整左边界
+                } else {
+                    left = middle + 1;
+                }
+            }
+            return ans;
+        }
+        console.log(minimumEffortPath(height1));
+        console.log(minimumEffortPath(height2));
+        console.log(minimumEffortPath(height3));
+    </script>
+</body>
+
+</html>
