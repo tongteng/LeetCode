@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>
+    3. 无重复字符的最长子串
+  </h1>
+
+  <h3>
+    给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+  </h3>
+
+  <h3>
+    输入: s = "abcabcbb"
+    输出: 3
+    解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+  </h3>
+
+  <h3>
+    输入: s = "bbbbb"
+    输出: 1
+    解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+  </h3>
+
+  <h3>
+    输入: s = "pwwkew"
+    输出: 3
+    解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+  </h3>
+
+  <h3>
+    输入: s = ""
+    输出: 0
+  </h3>
+
+  提示：
+  <h5>
+    <ul>
+      <li>0 <= s.length <=5 * 104</li> <li>s 由英文字母、数字、符号和空格组成</li>
+    </ul>
+  </h5>
+
+
+  <script>
+    // 双指针
+    // set实现
+    var lengthOfLongestSubstring = function (s) {
+      // 设置一个set
+      let set = new Set();
+      // 字符串长度
+      const sLen = s.length;
+      
+      let ri = -1, // 右指针初始值
+        ans = 0; // 最大长度
+      // 左指针开始字符串最左端一个一个遍历
+      for (let i = 0; i < sLen; i++) {
+        // 如果不是第一位，那就从set中左指针中删除前一位
+        if (i) {
+          set.delete(s[i - 1]);
+        }
+        // 如果ri已经是最后一位且下一位字符set中不存在就把下一位字符塞到set里面去，并将右指针右移
+        while (ri + 1 < sLen && !set.has(s[ri + 1])) {
+          set.add(s[ri + 1]);
+          ri++;
+        }
+        // 最大长度为之前最大长度和当前左右指针中的字符长度的最大值
+        ans = Math.max(ans, ri - i + 1);
+        // 如果右指针到达右端，那么退出循环，已经没有循环的必要了，最大值已经出来了
+        if (ri  === sLen - 1) {
+          break;
+        }
+      }
+      return ans;
+    }
+    // 数组实现
+    // var lengthOfLongestSubstring = function(s) {
+    //   let arr = [];
+    //   const sLen = s.length;
+    //   let ri = -1;
+    //   let ans = 0;
+    //   for (let i = 0; i < sLen; i ++) {
+    //     if (i !== 0) {
+    //       arr.shift();
+    //     }
+    //     while(ri + 1 < sLen && !arr.includes(s[ri + 1])) {
+    //       arr.push(s[ri + 1]);
+    //       ri++;
+    //     }
+    //     ans = Math.max(ans, ri - i + 1);
+    //     if (ri === sLen - 1) {
+    //       break;
+    //     }
+    //   }
+    //   return ans;
+    // };
+
+    let str = 'pwwkew';
+    console.log(lengthOfLongestSubstring(str));
+  </script>
+</body>
+
+</html>
