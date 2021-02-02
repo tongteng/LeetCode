@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>424. 替换后的最长重复字符</h1>
+  <h3>
+    给你一个仅由大写英文字母组成的字符串，你可以将任意位置上的字符替换成另外的字符，总共可最多替换 k 次。在执行上述操作后，找到包含重复字母的最长子串的长度。
+
+    注意：字符串长度 和 k 不会超过 104。
+  </h3>
+
+  <h3>
+    输入：s = "ABAB", k = 2
+    输出：4
+    解释：用两个'A'替换为两个'B',反之亦然。
+  </h3>
+
+  <h3>
+    输入：s = "AABABBA", k = 1
+    输出：4
+    解释：
+    将中间的一个'A'替换为'B',字符串变为 "AABBBBA"。
+    子串 "BBBB" 有最长重复字母, 答案为 4。
+  </h3>
+
+  <script>
+    var characterReplacement = function (s, k) {
+      const nums = {};
+      const len = s.length;
+
+      let left = 0,
+          right = 0,
+          maxn = 0;
+      while(right < len) {
+        nums[s[right]] = nums[s[right]] ? nums[s[right]] + 1 : 1;
+        maxn = Math.max(maxn, nums[s[right]]);
+
+        if (right - left + 1 - maxn > k) {
+          nums[s[left]]--;
+          left ++;
+        }
+        right ++;
+      }
+      return right - left;
+    };
+
+    let str = 'AABBBBBBBCDEFT';
+    let k = 1;
+
+    // // 思路就是保证左右指针的差值为当前已经遍历的最长子串长度加上可以更改的数量
+    // var characterReplacement = function (s, k) {
+    //   // 因为只有大写英文字母所以使用一个长度为26的数组存储字母出现的次数
+    //   const num = new Array(26).fill(0);
+    //   // 字符串长度
+    //   const n = s.length;
+    //   let maxn = 0, // 缓存遍历过程中字母出现最多的次数
+    //     left = 0, // 左指针
+    //     right = 0; // 右指针
+    //   // 如果右指针没有移到最右边，那持续右移
+    //   while (right < n) {
+    //     // 右指针出现的字母计数器加一
+    //     num[s[right].charCodeAt() - 'A'.charCodeAt()]++;
+    //     // 判断当前字母出现最多次数的数值
+    //     maxn = Math.max(maxn, num[s[right].charCodeAt() - 'A'.charCodeAt()])
+    //     // 如果当前右指针减去左指针加一（左右指针之间串的长度）减去当前遍历过的最长子串长度大于可以更改的字母数量那就将左指针右移，保证当前右指针减去左指针为可以更改的最长子串，并将左指针指向的字母数量减1
+    //     if (right - left + 1 - maxn > k) {
+    //       num[s[left].charCodeAt() - 'A'.charCodeAt()]--;
+    //       left++;
+    //     }
+    //     // 右指针持续右移
+    //     right++;
+    //   }
+    //   // 返回右指针减去左指针即为最大长度
+    //   return right - left;
+    // };
+
+    console.log(characterReplacement(str, k));
+  </script>
+</body>
+
+</html>
