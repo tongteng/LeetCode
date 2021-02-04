@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>643.子数组最大平均数I</h1>
+
+  <h3>给定 n 个整数，找出平均数最大且长度为 k 的连续子数组，并输出该最大平均数。</h3>
+
+  <h3>
+    输入：[1,12,-5,-6,50,3], k = 4
+    输出：12.75
+    解释：最大平均数 (12-5-6+50)/4 = 51/4 = 12.75
+  </h3>
+
+  <h6>
+    <ul>
+      <li>1 <= k <= n <= 30,000</li>
+      <li>所给数据范围 [-10,000，10,000]。</li>
+    </ul>
+  </h6>
+
+  <script>
+    var findMaxAverage = function(nums, k) {
+      let left = 0;
+      let right = k;
+      let ans = undefined;
+      while (right <= nums.length) {
+        let sum = nums.slice(left, right).reduce((prev, curr) => {
+          return prev + curr;
+        })
+        ans = ans === undefined ? sum / k : Math.max(ans, sum / k);
+
+        left ++;
+        right ++;
+      }
+      return ans;
+    };
+    console.log(findMaxAverage([-1], 1));
+  </script>
+</body>
+</html>
