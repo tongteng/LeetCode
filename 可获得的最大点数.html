@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        1423. 可获得的最大点数
+    </h1>
+
+    <h3>
+        几张卡牌 排成一行，每张卡牌都有一个对应的点数。点数由整数数组 cardPoints 给出。
+
+        每次行动，你可以从行的开头或者末尾拿一张卡牌，最终你必须正好拿 k 张卡牌。
+
+        你的点数就是你拿到手中的所有卡牌的点数之和。
+
+        给你一个整数数组 cardPoints 和整数 k，请你返回可以获得的最大点数。
+    </h3>
+
+    <h3>
+        输入：cardPoints = [1,2,3,4,5,6,1], k = 3
+        输出：12
+        解释：第一次行动，不管拿哪张牌，你的点数总是 1 。但是，先拿最右边的卡牌将会最大化你的可获得点数。最优策略是拿右边的三张牌，最终点数为 1 + 6 + 5 = 12 。
+    </h3>
+
+    <h3>
+        输入：cardPoints = [2,2,2], k = 2
+        输出：4
+        解释：无论你拿起哪两张卡牌，可获得的点数总是 4 。
+    </h3>
+
+    <h3>
+        输入：cardPoints = [9,7,7,9,7,7,9], k = 7
+        输出：55
+        解释：你必须拿起所有卡牌，可以获得的点数为所有卡牌的点数之和。
+    </h3>
+
+    <h3>
+        输入：cardPoints = [1,1000,1], k = 1
+        输出：1
+        解释：你无法拿到中间那张卡牌，所以可以获得的最大点数为 1 。 
+    </h3>
+
+    <h3>
+        输入：cardPoints = [1,79,80,1,1,1,200,1], k = 3
+        输出：202
+    </h3>
+
+    <h5>
+        <ul>
+            <li>1 <= cardPoints.length <= 10^5</li>
+            <li>1 <= cardPoints[i] <= 10^4</li>
+            <li>1 <= k <= cardPoints.length</li>
+        </ul>
+    </h5>
+
+    <script>
+        var maxScore = function(cardPoints, k) {
+            const len = cardPoints.length;
+            const windowSize = len - k;
+
+            let sum = 0;
+            for (let i = 0; i < windowSize; i ++) {
+                sum += cardPoints[i];
+            }
+
+            let minSum = sum;
+
+            for (let i = windowSize; i < len; i++) {
+                sum += cardPoints[i] - cardPoints[i - windowSize];
+                minSum = Math.min(minSum, sum);
+            }
+
+            let totalSum = cardPoints.reduce((prev, curr) => {
+                return prev + curr;
+            });
+
+            return totalSum - minSum;
+        }
+
+        // 求最小值，但是超时
+        // var maxScore = function(cardPoints, k) {
+        //     let cardSum = cardPoints.reduce((prev, curr) => {
+        //         return prev + curr;
+        //     });
+        //     const len = cardPoints.length;
+        //     let min = cardSum;
+        //     let index = 0;
+
+        //     if (len === k) {
+        //         return cardSum;
+        //     }
+
+        //     while (index <= k) {
+        //         let sum = cardPoints.slice(index, index + (len - k)).reduce((prev, curr) => {
+        //             return prev + curr;
+        //         })
+        //         min = Math.min(min, sum);
+
+        //         index ++;
+        //     }
+
+        //     return cardSum -  min;
+        // };
+
+        // 求最大值
+        // var maxScore = function(cardPoints, k) {
+        //     let maxCount = 0;
+        //     let index = 0;
+
+        //     if (cardPoints.length === k) {
+        //         return cardPoints.reduce((prev, curr) => {
+        //             return prev + curr;
+        //         })
+        //     }
+        //     while (index <= k) {
+        //         let leftArrSum = 0,
+        //             rightArrSum = 0;
+        //         if (index) {
+        //             leftArrSum = cardPoints.slice(0, index).reduce((prev, curr) => {
+        //                 return prev + curr;
+        //             });
+        //         }
+        //         if (index < k) {
+        //             rightArrSum = cardPoints.slice(index - k).reduce((prev, curr) => {
+        //                 return prev + curr;
+        //             })
+        //         }
+                
+        //         maxCount = Math.max(maxCount, leftArrSum + rightArrSum);
+
+        //         index ++;
+        //     }
+
+        //     return maxCount;
+        // };
+
+        console.log(maxScore([1,100, 1, 1], 1))
+    </script>
+</body>
+</html>
