@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>567.字符串的排列</h1>
+
+    <h3>
+        给定两个字符串 s1 和 s2，写一个函数来判断 s2 是否包含 s1 的排列。
+
+        换句话说，第一个字符串的排列之一是第二个字符串的子串。
+    </h3>
+
+    <h3>
+        输入: s1 = "ab" s2 = "eidbaooo"
+        输出: True
+        解释: s2 包含 s1 的排列之一 ("ba").
+    </h3>
+
+    <h3>
+        输入: s1= "ab" s2 = "eidboaoo"
+        输出: False
+    </h3>
+
+    <h5>
+        <ul>
+            <li>输入的字符串只包含小写字母</li>
+            <li>两个字符串的长度都在 [1, 10,000] 之间</li>
+        </ul>
+    </h5>
+
+    <script>
+        var checkInclusion = function(s1, s2) {
+            // debugger;
+            let arr1 = new Array(26).fill(0);
+
+            let s1Arr = s1.split('');
+
+            let result = false;
+
+            for (let i = 0; i < s1Arr.length; i++) {
+                arr1[s1Arr[i].charCodeAt() - 97]++;
+            }
+
+            for (let i = 0; i < s2.length - s1.length + 1; i ++) {
+                let cutArr = s2.slice(i, i + s1.length).split('');
+                let arr2 = new Array(26).fill(0);
+                for (let j = 0; j < cutArr.length; j++) {
+                    arr2[cutArr[j].charCodeAt() - 97]++;
+                }
+
+                let flag = true;
+
+                for (let k = 0; k < arr1.length; k++) {
+                    if (arr1[k] > arr2[k]) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (result = flag) {
+                    break;
+                }
+            }
+
+            return result;
+        };
+
+        console.log(checkInclusion('adc', 'dcda'));
+
+        // console.log(checkInclusion('ab', 'eidboaoo'));
+    </script>
+</body>
+</html>
