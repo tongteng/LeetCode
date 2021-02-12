@@ -51,22 +51,22 @@
     <script>
         var KthLargest = function(k, nums) {
             this.k = k;
-            this.mapNums = nums.sort((a, b) => b - a);
+            this.minHeap = nums.sort((a, b) => b - a);
         };
 
 
         KthLargest.prototype.add = function(val) {
-            let pos = this.mapNums.length;
+            let pos = this.minHeap.length;
             for (let i = 0; i < pos; i ++) {
-                if (val >= this.mapNums[i]) {
+                if (val >= this.minHeap[i]) {
                     pos = i;
                     break;
                 }
             }
 
-            this.mapNums.splice(pos, 0, val);
+            this.minHeap.splice(pos, 0, val);
 
-            return this.mapNums(this.k - 1);
+            return this.minHeap[this.k - 1];
         };
     </script>
 </body>
