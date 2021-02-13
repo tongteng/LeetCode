@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.回文数</title>
+</head>
+<body>
+    <h1>9.回文数</h1>
+
+    <h3>
+        给你一个整数 x ，如果 x 是一个回文整数，返回 true ；否则，返回 false 。
+
+        回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。例如，121 是回文，而 123 不是。
+    </h3>
+
+    <h3>
+        输入：x = 121
+        输出：true
+    </h3>
+
+    <h3>
+        输入：x = -121
+        输出：false
+        解释：从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
+    </h3>
+
+    <h3>
+        输入：x = 10
+        输出：false
+        解释：从右向左读, 为 01 。因此它不是一个回文数。
+    </h3>
+
+    <h3>
+        输入：x = -101
+        输出：false
+    </h3>
+
+    <h5>
+        <ul>
+            <li>-231 <= x <= 231 - 1</li>
+        </ul>
+    </h5>
+
+    <script>
+
+        var isPalindrome = function(x) {
+            return Number(`${Math.abs(x)}`.split('').reverse().join('')) === x;
+        }
+
+        // var isPalindrome = function(x) {
+        //     let str = String(x);
+        //     let len = str.length;
+        //     let mid = 0;
+
+        //     if (x < 0) {
+        //         return false;
+        //     }
+
+        //     if (len < 2) {
+        //         return true;
+        //     }
+
+        //     if (len % 2 === 0) {
+        //         mid = len / 2;
+        //     } else {
+        //         mid = Math.floor(len / 2);
+        //     }
+
+        //     let left = str.slice(0, mid);
+        //     let right = str.slice(-(mid));
+
+        //     if (left === right.split('').reverse().join('')) {
+        //         return true;
+        //     }
+
+        //     return false;
+        // };
+
+        console.log(isPalindrome(101))
+    </script>
+</body>
+</html>
