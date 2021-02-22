@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        var longestSubarray = function (nums, limit) {
+            let n = l = r = 0, min = [], max = []
+            while (r < nums.length) {
+                while (nums[r] > max[max.length - 1]) max.pop()
+                max.push(nums[r])
+                while (nums[r] < min[min.length - 1]) min.pop()
+                min.push(nums[r++])
+                if (max[0] - min[0] > limit) nums[l] === max[0] && max.shift(), nums[l++] === min[0] && min.shift()
+                else n = r - l
+            }
+            return n
+        };
+
+        // var longestSubarray = function(nums, limit) {
+        //     let left = 0,
+        //         right = 1;
+        //     const len = nums.length;
+        //     while(right < len) {
+        //         let arr = nums.slice(left, right + 1);
+        //         arr.sort((a, b) => a - b);
+        //         let last = arr[arr.length - 1];
+        //         let first = arr[0];
+        //         if (last - first <= limit) {
+        //             right ++;
+        //         } else {
+        //             left ++;
+        //             right ++;
+        //         }
+        //     }
+        //     return right - left;
+        // };
+
+        // console.log(longestSubarray([8,2,4,7], 4));
+        // console.log(longestSubarray([10,1,2,4,7,2], 5));
+        // console.log(longestSubarray([4,2,2,2,4,4,2,2], 0));
+        console.log(longestSubarray([1,5,6,7,8,10,6,5,6], 4))
+    </script>
+</body>
+</html>
