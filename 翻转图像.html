@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>832.翻转图像</h1>
+    <script>
+        var flipAndInvertImage = function(A) {
+            let result = [];
+            for (let i = 0; i < A.length; i ++) {
+                let arr = A[i];
+                arr = arr.map(item => +!item);
+                arr.reverse();
+                result.push(arr);
+            }
+            return result;
+        };
+        console.log(flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]]))
+    </script>
+</body>
+</html>
