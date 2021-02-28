@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>7.整数反转</h1>
+    <script>
+        var reverse = function(x) {
+            let type = x >= 0;
+            let str = String(Math.abs(x)).split('').reverse().join('');
+            let res = type ? Number(str) : -Number(str);
+            return res > -Math.pow(2, 31) && res < Math.pow(2, 31) - 1 ? res : 0
+        };
+        console.log(reverse(1230))
+    </script>
+</body>
+</html>
