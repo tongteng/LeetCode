@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>338.比特位计数</h1>
+    <script>
+        var countBits = function(num) {
+            let arr = [];
+            for (let i = 0; i <= num; i ++) {
+                arr.push(i.toString(2).split('1').length - 1);
+            }
+            return arr;
+        };
+    </script>
+</body>
+</html>
