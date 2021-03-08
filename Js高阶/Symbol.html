@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Symbol</h1>
+    <script>
+        let s1 = Symbol('s1'),
+            s2 = Symbol('s2');
+
+        let o = {
+            [s1]: 's1 val',
+            [s2]: 's2 val',
+            s3: 's3 val',
+            s4: 's4 val'
+        }
+
+        console.log(o[s1])
+
+        console.log(Object.keys(o));
+        console.log(Object.getOwnPropertyNames(o));
+        console.log(Object.getOwnPropertySymbols(o));
+        console.log(Object.getOwnPropertyDescriptors(o));
+        console.log(Reflect.ownKeys(o));
+    </script>
+</body>
+</html>
