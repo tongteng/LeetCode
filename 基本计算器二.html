@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var calculate = function(s) {
+            s = s.split(' ').join('');
+            let stack = [];
+            const len = s.length;
+            let status = '+';
+            let num = 0;
+            for (let i = 0; i < s.length; i++) {
+                if (s[i].charCodeAt() >= 48) {
+                    num = num * 10 + Number(s[i]);
+                }
+                if (s[i].charCodeAt() < 48 || i == len - 1) {
+                    switch(status) {
+                        case '+':
+                            stack.push(num);
+                            break;
+                        case '-':
+                            stack.push(-num);
+                            break;
+                        case '*':
+                            stack.push(stack.pop() * num);
+                            break;
+                        case '/':
+                            stack.push(stack[stack.length - 1] > 0 ? Math.floor(stack.pop() / num) : Math.ceil(stack.pop() / num));
+                            break;
+                        default:
+                            break;
+                    }
+                    status = s[i];
+                    num = 0;
+                }
+                
+            }
+            console.log(stack);
+            return stack.reduce((prev, curr) => prev + curr);
+        };
+        console.log(calculate(' 3+2 * 2 '));
+        console.log(calculate(" 3/2 "));
+        console.log(calculate("14-3/2"))
+    </script>
+</body>
+</html>
