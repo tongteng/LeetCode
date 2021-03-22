@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // const PENDING = 'PENDING';
+    // const FULFILLED = 'FULFILLED';
+    // const REJECT = 'REJECT';
+
+    // function myPromise(excutor) {
+    //   this.status = PENDING;
+    //   this.res = '';
+    //   this.err = '';
+    //   this.resolveFunc = [];
+    //   this.rejectFunc = [];
+
+    //   resolve = val => {
+    //     if (this.status === PENDING) {
+    //       this.status = FULFILLED;
+    //       this.res = val;
+    //       this.resolveFunc.forEach(func => func());
+    //     }
+    //   }
+
+    //   reject = err => {
+    //     if (this.status === PENDING) {
+    //       this.status = REJECT;
+    //       this.res = val;
+    //       this.rejectFunc.forEach(func => func());
+    //     }
+    //   }
+
+    //   try {
+    //     excutor(resolve, reject);
+    //   } catch(e) {
+    //     reject(e);
+    //   }
+    // }
+
+    // myPromise.prototype.then = function(func) {
+    //   func = typeof func === 'function' ? func : function(val) {return val}
+
+    //   if (this.status === PENDING) {
+    //     this.resolveFunc.push(function() {
+    //       func(this.res);
+    //     })
+    //   }
+    // }
+    function a() {
+      return new Promise((resolve, reject) => {
+        console.log('promise start');
+        setTimeout(() => {
+          resolve(2)
+        })
+      })
+    }
+
+    async function test() {
+      console.log('test start');
+      let result = await a();
+      console.log(result);
+      console.log('end');
+      return 'getData end';
+    }
+
+    test().then(res => {
+      console.log(res);
+    })
+  </script>
+</body>
+</html>
