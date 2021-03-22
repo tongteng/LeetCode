@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  this 是 JavaScript 中的一个关键字。它通常被运用于函数体内，依赖于函数调用的上下文条件，与函数被调用的方式有关。它指向谁，则完全是由函数被调用的调用点来决定的。
+
+  所以，this，是在运行时绑定的，而与编写时的绑定无关。随着函数使用场合的不同，this 的值也会发生变化。但是有一个总的原则：那就是this 总会指向，调用函数的那个对象。
+
+  call apply 改变this指向
+
+  fn.call(obj, a, b, c);
+  fn.apply(obj, [a, b, c]);
+
+  调用call、apply的必须是一个函数，第一个参数不传默认全局对象window
+  第二个参数，call可以传任意个参数，apply第二个参数是一个数组
+
+  Object.prototype.toString.call()
+
+  求数组中最大值 Math.max.apply(null, Array);
+  求数组中最小值 Math.min.apply(null, Array);
+
+
+<script>
+  Function.prototype.call = function(context, ...arg) {
+    let newContext = context || window,
+      result = null;
+    newContext.fn = this;
+    result = newContext.fn(...arg);
+    delete newContext.fn;
+    return result;
+  }
+
+  Function.prototype.apply = function(context, arg) {
+    let newContext = context || window,
+      result = null;
+    newContext.fn = this;
+    result = newContext.fn(...arg);
+    delete newContext.fn;
+    return result;
+  }
+
+  Function.prototype.bind = function(context, ...arg) {
+    const self = this;
+    return function() {
+      return self.apply(context, arg);
+    }
+  }
+
+  function newF(constructor, ...arg) {
+    let obj = new Object();
+    obj.__proto__ = constructor.prototype;
+    let ret = constructor.apply(obj, arg);
+    return typeof ret === 'object' ? ret : obj;
+  }
+  
+
+  // call、apply、bind实现原理
+
+  Function.prototype._call = function(context, ...arg) {
+    let newContext = context || window,
+      result = null;
+    newContext.fn = this;
+    result = newContext.fn(...arg);
+    delete newContext.fn;
+    return result;
+  }
+
+  Function.prototype._apply = function(context, arg) {
+    let newContext = context || window,
+      result = null;
+    newContext.fn = this;
+    result = newContext.fn(...arg);
+    delete newContext.fn;
+    return result;
+  }
+
+  Function.prototype._bind = function(context, ...arg) {
+    const self = this;
+    return function() {
+      return self._apply(context, arg);
+    }
+  }
+
+  let test = function(a, b, c) {
+    console.log(a + b + c + this.x);
+  }
+
+  const obj = { x : 1};
+  test._call(obj, 1, 2, 3);
+  test._apply(obj, [1, 2, 3]);
+  test._bind(obj, 1, 2, 3)();
+
+
+  // new 实现原理
+  function _new(constructor, ...args) {
+    // 创建新的对象
+    let obj = new Object();
+    // 将对象的原型指向构造函数的原型
+    obj.__proto__ = constructor.prototype;
+    // 执行构造函数方法，并把构造函数的this指向新建的对象，并保存构造函数的返回值
+    let ret = constructor.apply(obj, args);
+    // 返回
+    return typeof ret === 'object' ? ret : obj;
+  }
+</script>
+
+
+</body>
+</html>

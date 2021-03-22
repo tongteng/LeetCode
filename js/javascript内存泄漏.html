@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  javascript内存泄漏的几种场景
+
+  意外的全局变量，但是在当前eslint的管控下，在代码编写阶段就已经可以发现这个问题了
+
+  被遗忘的计时器  vue组件销毁的时候记得也要清除计时器
+
+  被遗忘的事件监听器  vue组件销毁的时候记得也要清楚掉监听器（addEventListener 在beforeDestroy钩子函数里执行removeEventListener）
+
+  被遗忘的set 和 map
+
+  闭包
+
+</body>
+</html>
