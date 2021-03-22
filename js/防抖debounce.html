@@ -37,6 +37,33 @@
 
     // window.addEventListener('scroll', debounce(handle, 500));
     window.addEventListener('scroll', debounce(handle, 1000));
+
+
+
+
+    function debounce(fn, delay) {
+      let timer = null;
+      return function() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, delay);
+      }
+    }
+
+    function throttle(fn, delay) {
+      let canRun = true;
+      return function() {
+        if (!canRun) return;
+
+        canRun = false;
+
+        setTimeout(() => {
+          fn.apply(this, arguments);
+          canRun = true;
+        }, delay);
+      }
+    }
   </script>
 </body>
 </html>
